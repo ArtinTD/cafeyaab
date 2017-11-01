@@ -1,9 +1,11 @@
-from django.forms.models import ModelForm
+from django import forms
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
 
-from cafe.models import UserInfo
 
+class SignUpForm(UserCreationForm):
+    email = forms.EmailField(max_length=254, help_text='Required. Inform a valid email address.')
 
-class UserInfoForm(ModelForm):
     class Meta:
-        model = UserInfo
-        fields = ('username', 'email', 'password')
+        model = User
+        fields = ('username', 'password' ,'email' )
