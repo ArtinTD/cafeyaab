@@ -1,36 +1,25 @@
-<!DOCTYPE html>
+{% extends "father.html" %}
+{% block link %}
+{% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static "signupstyle.css" %}"/>
+{% endblock %}
+{% block nav %}
+    <div class="login" style="margin-top: 10rem ">
 
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Salam</title>
-    <link rel="stylesheet" type="text/css" href="signupstyle.css"/>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-</head>
-<body lang="en">
-<div class="login">
-    {% extends "father.html" %}
+        <div class="form-img"></div>
 
-    {% block nav %}
+        <form autocomplete="off" method="post" action="#">
+            {% csrf_token %}
+            <input class="inputA" name="email" placeholder="Email" type="text">
+            <input class="inputA" name="username" placeholder="Username" type="text">
+            <input class="inputA" name="password" placeholder="Password" type="password">
+            <input class="inputA" type="submit" value="Sign up">
+        </form>
+    </div>
 
-    <div class="form-img"></div>
-
-    <form autocomplete="off" method="post" action="#">
-        <input class="inputA" name="email" placeholder="Email" type="text">
-        <input class="inputA" name="username" placeholder="Username" type="text">
-        <input class="inputA" name="password" placeholder="Password" type="password">
-        <input class="inputA" type="submit" value="Sign up">
-    </form>
-</div>
-
-<div class="signup login">
-  <p>Have an account? <a href="login.jsp">Log in</a></p>
-</div>
+    <div class="signup login">
+        <p>Have an account? <a href="login.jsp">Log in</a></p>
+    </div>
 
 {% endblock %}
-
-
-</body>
-</html>
