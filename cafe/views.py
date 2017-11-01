@@ -19,3 +19,5 @@ class HomePageView(FormView):
         login(self.request, form.get_user())
 
         return super(HomePageView, self).form_valid(form)
+
+class SignUp
