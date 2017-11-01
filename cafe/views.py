@@ -3,8 +3,8 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.base import TemplateView, RedirectView
 from django.views.generic.edit import FormView
-from cafe.forms.user_forms import SignUpForm, UserInfoForm
-from cafe.models import UserInfo
+from cafe.forms.user_forms import UserInfoForm
+from cafe.models import UserInfo, Cafe
 import json
 import urllib
 
@@ -17,40 +17,30 @@ from django.contrib.auth import login, authenticate
 # from .models import Comment
 # from .forms import CommentForm
 
+from django.views.generic.list import ListView
 
-class HomePageView(FormView):
-    success_url = '/index/'
-    form_class = AuthenticationForm
+class HomePageView(ListView):
+    model = Cafe
     template_name = 'index.html'
 
-    def dispatch(self, request, *args, **kwargs):
-        request.session.set_test_cookie()
-        return super(HomePageView, self).dispatch(request, *args, **kwargs)
-
-    def form_valid(self, form):
-        login(self.request, form.get_user())
-
-        return super(HomePageView, self).form_valid(form)
-
-class SignUpView(FormView):
-    success_url = '/signup/'
+class LoginView(FormView):
+    success_url = '/index/'
     form_class = AuthenticationForm
-    template_name = 'signup.html'
+    template_name = 'login.html'
 
     def dispatch(self, request, *args, **kwargs):
         request.session.set_test_cookie()
-        return super(SignUpView, self).dispatch(request, *args, **kwargs)
+        return super(LoginView, self).dispatch(request, *args, **kwargs)
 
     def form_valid(self, form):
         login(self.request, form.get_user())
 
-        return super(SignUpView, self).form_valid(form)
-
+        return super(LoginView, self).form_valid(form)
 
 class UserInfoView(LoginRequiredMixin, FormView):
-    success_url = '/signup/'
+    success_url = '/index/'
     form_class = UserInfoForm
-    template_name = 'form.html'
+    template_name = 'signup.html'
 
     def form_valid(self, form):
         if self.request.user.additionals.count() > 0:
@@ -97,16 +87,16 @@ def comments(request):
 
     return render(request, 'core/comments.html', {'comments': comments_list, 'form': form})
 
-def signup(request):
-    if request.method == 'POST':
-        form = SignUpForm(request.POST)
-        if form.is_valid():
-            form.save()
-            username = form.cleaned_data.get('username')
-            raw_password = form.cleaned_data.get('password1')
-            user = authenticate(username=username, password=raw_password)
-            login(request, user)
-            return redirect('home')
-    else:
-        form = SignUpForm()
-    return render(request, 'signup.html', {'form': form})
+# def signup(request):
+#     if request.method == 'POST':
+#         form = SignUpForm(request.POST)
+#         if form.is_valid():
+#             form.save()
+#             username = form.cleaned_data.get('username')
+#             raw_password = form.cleaned_data.get('password1')
+#             user = authenticate(username=username, password=raw_password)
+#             login(request, user)
+#             return redirect('home')
+#     else:
+#         form = SignUpForm()
+#     return render(request, 'signup.html', {'form': form})

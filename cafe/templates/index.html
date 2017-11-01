@@ -8,4 +8,14 @@
   <p>The .input-group-btn class attaches a button next to an input field. This is often used as a search bar:</p>
 </div>
 {% endblock %}
+{% block list%}
+<h1>Cafes</h1>
+<ul>
+{% for cafe in object_list %}
+    <li> {{ cafe.name }}<br>
+         {{ cafe.main_image_url }}
+    </li>
+{% endfor %}
+</ul>
+{% endblock %}
 
