@@ -1,12 +1,17 @@
 from django.db import models
 
 
-class Question(models.Model):
-    question_text = models.CharField(max_length=200)
-    pub_date = models.DateTimeField('date published')
+class Cafe(models.Model):
+    name = models.CharField(max_length= 50)
+    description = models.TextField()
+    longitude = models.FloatField()
+    latitude = models.FloatField()
+    main_image_url = models.URLField()
+
+    def __str__(self):
+        return self.name
 
 
-class Choice(models.Model):
-    question = models.ForeignKey(Question, on_delete=models.CASCADE)
-    choice_text = models.CharField(max_length=200)
-    votes = models.IntegerField(default=0)
+class CafeImage(models.Model):
+    cafe = models.ForeignKey(to=Cafe , related_name='all_images')
+    image_url = models.URLField()
