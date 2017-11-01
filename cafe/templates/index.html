@@ -25,27 +25,43 @@
 
 
 {% block nav%}
-<div class="container" style = "margin-top: 10rem">
+    <div class="container" style = "margin-top: 10rem">
 
-<div class="scrollbar" id="style-1">
-  <div class="force-overflow" style = "margin-top: 2rem; margin-left: 2rem">
-<ul class="list-unstyled" >
+    <div class="scrollbar" id="style-1">
+      <div class="force-overflow" style = "margin-top: 2rem; margin-left: 2rem">
+    <ul class="list-unstyled" >
 
-  <li class="media" >
-      <div class="media-left">
-        <img src="{% static "1.jpg" %}" class="media-object" style="width:100px">
-      </div>
-      <div class="media-body">
-        <h4 class="media-heading">Left-aligned</h4>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-      </div>
-  </li>
 
-</ul>
+        <li class="media" >
+          <div class="media-left">
+            <img src="{% static "1.jpg" %}" class="media-object" style="width:100px">
+          </div>
+          <div class="media-body">
+            <h4 class="media-heading">LAXLCAVSAV</h4>
+            <p> aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p>
+          </div>
+      </li>
 
-</div>
-</div>
 
-</div>
+        {% for cafe in object_list %}
+
+            <li class="media" >
+          <div class="media-left">
+            <img src="{{ cafe.main_image_url }}" class="media-object" style="width:100px">
+          </div>
+          <div class="media-body">
+            <h4 class="media-heading">{{ cafe.name }}</h4>
+            <p> {{ cafe.description }}</p>
+          </div>
+      </li>
+        {% endfor %}
+
+
+    </ul>
+
+    </div>
+    </div>
+
+    </div>
 
 {% endblock %}
