@@ -14,8 +14,7 @@ class SignUpForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ('username', 'name', 'email', 'password1', 'password2', )
-
+        fields = ('username', 'name', 'email','password1', 'password2')
     def clean_username(self):
         username = self.cleaned_data.get("username")
     # user_model = get_user_model() # your way of getting the Use
@@ -23,7 +22,7 @@ class SignUpForm(UserCreationForm):
             UserInfo.objects.get(username__iexact= "username")
         except UserInfo.DoesNotExist:
             return username
-        raise forms.ValidationError(_("This username has already existed."))
+        raise forms.ValidationError(("This username has already existed."))
 
 # class SignupForm(ModelForm):
 #     """

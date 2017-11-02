@@ -8,14 +8,18 @@
 
         <div class="form-img"></div>
 
-        <form autocomplete="off" method="post" action="#">
+        <form autocomplete="off" method="post" action="#" class="InputsA">
             {% csrf_token %}
+
+            <input class="inputA" name="name" placeholder="Name" type="text">
             <input class="inputA" name="email" placeholder="Email" type="email">
             <input class="inputA" name="username" placeholder="Username" type="text">
-            <input class="inputA" name="password" placeholder="Password" type="password">
+            <input class="inputA" name="password1" placeholder="Password" type="password">
+            <input class="inputA" name="password2" placeholder="Repeat Password" type="password">
             <input class="inputA" type="submit" value="Sign up">
-            <script src='https://www.google.com/recaptcha/api.js'></script>
-            <div class="g-recaptcha" data-sitekey="6LdRSRYUAAAAAFCqQ1aZnYfRGJIlAUMX3qkUWlcF"></div>
+            {{form.errors}}
+{#            <script src='https://www.google.com/recaptcha/api.js'></script>#}
+{#            <div class="g-recaptcha" data-sitekey="6LdRSRYUAAAAAFCqQ1aZnYfRGJIlAUMX3qkUWlcF"></div>#}
         </form>
     </div>
 
