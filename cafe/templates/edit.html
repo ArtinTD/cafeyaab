@@ -1,0 +1,23 @@
+{% extends "father.html" %}
+{% block link %}
+{% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static "signupstyle.css" %}"/>
+{% endblock %}
+{% block nav %}
+    <div class="login" style="margin-top: 10rem ">
+
+        <div class="form-img"></div>
+
+        <form autocomplete="off" method="post" action="#" class="InputsA">
+            {% csrf_token %}
+            <input class="inputA" name="name" placeholder="New Name" type="text">
+            <input class="inputA" name="email" placeholder="New Email" type="email">
+            <input class="inputA" name="password1" placeholder="New Password" type="password">
+            <input class="inputA" name="password2" placeholder="Repeat New Password" type="password">
+            <input class="inputA" type="submit" value="Edit">
+
+        </form>
+    </div>
+
+{% endblock %}
+
