@@ -27,14 +27,10 @@ class HomePageView(ListView):
     model = Cafe
     template_name = 'index.html'
 
-
-    def search(request):
-        try:
-            q = request.GET['q']
-            cafes = HomePageView.objects.filter(name__search=q)
-            return render_to_response('index.html', {'cafes':cafes, 'q':q})
-        except KeyError:
-            return render_to_response('index.html')
+    def get_queryset(self):
+        q = self.request.GET['q']
+        cafes = Cafe.objects.filter(name__startswith=q)
+        return cafes
 
 
 def cafe_view(request, slug):
