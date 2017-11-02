@@ -4,6 +4,12 @@
 
 {% block nav %}
 
-    <img src="{% static "mypic.jpg" %}" class="img-circle" alt="Cinque Terre">
-
+    <div class="row">
+    <div class="col-lg-8"></div>
+        <div class="col-lg-8"></div>
+        <div>
+        <img src="{% static "mypic.jpg" %}" class="img-circle" alt="Cinque Terre">
+           <h4> {{ user.user.username }} </h4>
+        </div>
+    </div>
 {% endblock %}
