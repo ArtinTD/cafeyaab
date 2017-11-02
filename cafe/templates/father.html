@@ -43,7 +43,16 @@
     <ul class="nav navbar-nav">
       <li class="active"><a href="/cafe/index">Home</a></li>
       <li><a href="/cafe">Sign up</a></li>
-      <li><a href="{% url 'logout' %}?next={% url 'login' %}">Log Out</a></li>
+      {% if request.user.is_active%}
+      <li><a href="{% url 'logout' %}?next={% url 'login' %}">
+          Log Out
+      </a></li>
+      {% else %}
+      <li><a href="{% url 'logout' %}?next={% url 'login' %}">
+          Log In
+      </a></li>
+      {% endif %}
+
     </ul>
     <form class="navbar-form navbar-right">
       <div class="input-group">
