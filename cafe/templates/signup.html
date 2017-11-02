@@ -10,16 +10,20 @@
 
         <form autocomplete="off" method="post" action="#" class="InputsA">
             {% csrf_token %}
-
             <input class="inputA" name="name" placeholder="Name" type="text">
+            {{form.name.errors}}
             <input class="inputA" name="email" placeholder="Email" type="email">
+            {{form.email.errors}}
             <input class="inputA" name="username" placeholder="Username" type="text">
+            {{form.username.errors}}
             <input class="inputA" name="password1" placeholder="Password" type="password">
+            {{form.password1.errors}}
             <input class="inputA" name="password2" placeholder="Repeat Password" type="password">
+            {{form.password2.errors}}
             <input class="inputA" type="submit" value="Sign up">
-            {{form.errors}}
-{#            <script src='https://www.google.com/recaptcha/api.js'></script>#}
-{#            <div class="g-recaptcha" data-sitekey="6LdRSRYUAAAAAFCqQ1aZnYfRGJIlAUMX3qkUWlcF"></div>#}
+
+            <script src='https://www.google.com/recaptcha/api.js'></script>
+            <div class="g-recaptcha" data-sitekey="6LdRSRYUAAAAAFCqQ1aZnYfRGJIlAUMX3qkUWlcF"></div>
         </form>
     </div>
 

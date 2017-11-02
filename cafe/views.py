@@ -92,47 +92,47 @@ from django.core.mail import send_mail
 #     send_mail(subject, message, sender, recipients)
 #     return HttpResponseRedirect('/thanks/')
 
-# def signup(request):
-#     if request.method == 'POST':
-#         form = SignUpForm(request.POST)
-#         if form.is_valid():
-#             form.save()
-#             username = form.cleaned_data.get('username')
-#             raw_password = form.cleaned_data.get('password1')
-#             user = authenticate(username=username, password=raw_password)
-#             login(request, user)
-#             return redirect('home')
-#     else:
-#         form = SignUpForm()
-#     return render(request, 'signup.html', {'form': form})
-# def comments(request):
-#     comments_list = UserInfo.objects.order_by('-created_at')
-#
-#     if request.method == 'POST':
-#         form = SignUpForm(request.POST)
-#         if form.is_valid():
-#
-#             ''' Begin reCAPTCHA validation '''
-#             recaptcha_response = request.POST.get('g-recaptcha-response')
-#             url = 'https://www.google.com/recaptcha/api/siteverify'
-#             values = {
-#                 'secret': settings.GOOGLE_RECAPTCHA_SECRET_KEY,
-#                 'response': recaptcha_response
-#             }
-#             data = urllib.parse.urlencode(values).encode()
-#             req =  urllib.request.Request(url, data=data)
-#             response = urllib.request.urlopen(req)
-#             result = json.loads(response.read().decode())
-#             ''' End reCAPTCHA validation '''
-#
-#             if result['success']:
-#                 form.save()
-#                 messages.success(request, 'New comment added with success!')
-#             else:
-#                 messages.error(request, 'Invalid reCAPTCHA. Please try again.')
-#
-#             return redirect('comments')
-#     else:
-#         form = SignUpForm()
-#
-#     return render(request, 'index.html', {'comments': comments_list, 'form': form})
+def signup(request):
+    if request.method == 'POST':
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            raw_password = form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=raw_password)
+            login(request, user)
+            return redirect('home')
+    else:
+        form = SignUpForm()
+    return render(request, 'signup.html', {'form': form})
+def comments(request):
+    comments_list = UserInfo.objects.order_by('-created_at')
+
+    if request.method == 'POST':
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+
+            ''' Begin reCAPTCHA validation '''
+            recaptcha_response = request.POST.get('g-recaptcha-response')
+            url = 'https://www.google.com/recaptcha/api/siteverify'
+            values = {
+                'secret': settings.GOOGLE_RECAPTCHA_SECRET_KEY,
+                'response': recaptcha_response
+            }
+            data = urllib.parse.urlencode(values).encode()
+            req =  urllib.request.Request(url, data=data)
+            response = urllib.request.urlopen(req)
+            result = json.loads(response.read().decode())
+            ''' End reCAPTCHA validation '''
+
+            if result['success']:
+                form.save()
+                messages.success(request, 'New comment added with success!')
+            else:
+                messages.error(request, 'Invalid reCAPTCHA. Please try again.')
+
+            return redirect('comments')
+    else:
+        form = SignUpForm()
+
+    return render(request, 'index.html', {'comments': comments_list, 'form': form})
