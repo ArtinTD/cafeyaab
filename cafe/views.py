@@ -10,7 +10,7 @@ from cafe.models import UserInfo, Cafe
 import json
 import urllib
 # from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, render_to_response
 from django.conf import settings
 from django.contrib import messages
 
@@ -26,92 +26,76 @@ class HomePageView(ListView):
     model = Cafe
     template_name = 'index.html'
 
-class LoginView(FormView):
-    success_url = '/login/'
-    form_class = AuthenticationForm
-    template_name = 'login.html'
 
-    def dispatch(self, request, *args, **kwargs):
-        request.session.set_test_cookie()
-        return super(LoginView, self).dispatch(request, *args, **kwargs)
+    def search(request):
+        try:
+            q = request.GET['q']
+            cafes = HomePageView.objects.filter(name__search=q)
+            return render_to_response('index.html', {'cafes':cafes, 'q':q})
+        except KeyError:
+            return render_to_response('index.html')
 
-    def form_valid(self, form):
-        login(self.request, form.get_user())
+class CafeView(FormView):
+    template_name = 'cafe.html'
 
-        return super(LoginView, self).form_valid(form)
+    # def get_queryset(self):
+    #     self.request.GET['q']
+    #     return Cafe.objects.filter('q')
+        #  query = Cafe.objects.GET.get('q')
+        # if query:
+        #     query_list = query.split()
+        #     result = result.filter(
+        #         reduce(operator.and_,
+        #                (Q(title__icontains=q) for q in query_list)) |
+        #         reduce(operator.and_,
+        #                (Q(content__icontains=q) for q in query_list))
+        #     )
+        #
+        # return result
+
+# class LoginView(FormView):
+#     success_url = '/index/'
+#     form_class = AuthenticationForm
+#     template_name = 'login.html'
+#
+#     def dispatch(self, request, *args, **kwargs):
+#         request.session.set_test_cookie()
+#         return super(LoginView, self).dispatch(request, *args, **kwargs)
+#
+#     def form_valid(self, form):
+#         login(self.request, form.get_user())
+#
+#         return super(LoginView, self).form_valid(form)
 #
 # class SignupView(FormView):
 #     success_url = '/index/'
 #     form_class = SignUpForm
 #     template_name = 'signup.html'
+# def login(request):
+#     print("Sasasas")
+#     if request.method == 'POST':
+#         form = SignUpForm(request.POST)
+#         print(form.data)
+#         if form.is_valid():
+#              username = form.cleaned_data.get('username')
+#              raw_password = form.cleaned_data.get('password1')
+#              user = authenticate(username=username, password=raw_password)
+#              login(request, user)
+#              return redirect('cafe/index')
+#
+#     else:
+#         form = SignUpForm()
+#         print(form.errors)
+#     return render(request, 'registration/login.html', {'form': form})
 
 
 def signup(request):
+    comments_list = UserInfo.objects.order_by('-created_at')
     if request.method == 'POST':
         form = SignUpForm(request.POST)
         print(form.data)
         if form.is_valid():
-            print(form)
-            print('form valid')
             form.save()
-            #username = form.cleaned_data.get('username')
-            #raw_password = form.cleaned_data.get('password1')
-            #user = authenticate(username=username, password=raw_password)
-            #login(request, user)
-            return redirect('/cafe/index')
-    else:
-        form = SignUpForm()
-    print(form.errors)
-    return render(request, 'signup.html', {'form': form})
-
-
-
-    # def form_valid(self, form):
-        # if self.request.user.additionals.count() > 0:
-        #     user_info = self.request.user.additionals.all()[0]
-        #     user_info.username = form.data['username']
-        #     user_info.save()
-        # else:
-        #     user_info = UserInfo()
-        #     user_info.user = self.request.user
-        #     user_info.username = form.data['username']
-        #     user_info.save()
-        # return super(UserInfoView, self).form_valid(form)
-from django.core.mail import send_mail
-
-# if form.is_valid():
-#     subject = form.cleaned_data['subject']
-#     message = form.cleaned_data['message']
-#     sender = form.cleaned_data['sender']
-#     cc_myself = form.cleaned_data['cc_myself']
-#
-#     recipients = ['info@example.com']
-#     if cc_myself:
-#         recipients.append(sender)
-#
-#     send_mail(subject, message, sender, recipients)
-#     return HttpResponseRedirect('/thanks/')
-
-def signup(request):
-    if request.method == 'POST':
-        form = SignUpForm(request.POST)
-        if form.is_valid():
-            form.save()
-            username = form.cleaned_data.get('username')
-            raw_password = form.cleaned_data.get('password1')
-            user = authenticate(username=username, password=raw_password)
-            login(request, user)
-            return redirect('home')
-    else:
-        form = SignUpForm()
-    return render(request, 'signup.html', {'form': form})
-def comments(request):
-    comments_list = UserInfo.objects.order_by('-created_at')
-
-    if request.method == 'POST':
-        form = SignUpForm(request.POST)
-        if form.is_valid():
-
             ''' Begin reCAPTCHA validation '''
             recaptcha_response = request.POST.get('g-recaptcha-response')
             url = 'https://www.google.com/recaptcha/api/siteverify'
@@ -128,11 +112,13 @@ def comments(request):
             if result['success']:
                 form.save()
                 messages.success(request, 'New comment added with success!')
+                return redirect('/cafe/index')
             else:
                 messages.error(request, 'Invalid reCAPTCHA. Please try again.')
 
-            return redirect('comments')
+
     else:
         form = SignUpForm()
+    print(form.errors)
+    return render(request, 'signup.html', {'comments': comments_list,'form': form})
 
-    return render(request, 'index.html', {'comments': comments_list, 'form': form})

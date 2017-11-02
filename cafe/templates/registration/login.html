@@ -1,0 +1,29 @@
+{% extends "father.html" %}
+{% block link %}
+{% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static "signupstyle.css" %}"/>
+{% endblock %}
+{% block nav %}
+    <div class="login" style="margin-top: 10rem ">
+
+        <div class="form-img"></div>
+        {{ request.user }}
+        <form method="post" action=" {% url 'login' %}" class="InputsA">
+            {% csrf_token %}
+
+            <input class="inputA" name="username" placeholder="Username" type="text">
+
+            <input class="inputA" name="password" placeholder="Password" type="password">
+
+            <input class="inputA" type="submit" value="Login">
+
+{#            <script src='https://www.google.com/recaptcha/api.js'></script>#}
+{#            <div class="g-recaptcha" data-sitekey="6LfjxTYUAAAAAADlhRjLrAaO8vPm0BTwYX6YxRMl"></div>#}
+        </form>
+    </div>
+
+    <div class="signup login">
+        <p>Don,t have an account? <a href="../signup.html">Sign Up</a></p>
+    </div>
+{% endblock %}
+
