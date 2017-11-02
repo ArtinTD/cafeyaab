@@ -28,7 +28,7 @@ class HomePageView(ListView):
     template_name = 'index.html'
 
     def get_queryset(self):
-        q = self.request.GET['q']
+        q = self.request.GET.get('q', '')
         cafes = Cafe.objects.filter(name__startswith=q)
         return cafes
 
