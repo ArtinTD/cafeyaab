@@ -29,7 +29,7 @@ class HomePageView(ListView):
 
     def get_queryset(self):
         q = self.request.GET.get('q', '')
-        cafes = Cafe.objects.filter(name__startswith=q)
+        cafes = Cafe.objects.filter(name__contains=q)
         return cafes
 
 
