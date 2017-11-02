@@ -5,41 +5,86 @@
 {% block nav %}
 
     <div class="container">
-  <h2>Carousel Example</h2>
-  <div id="myCarousel" class="carousel slide" data-ride="carousel">
-    <!-- Indicators -->
-    <ol class="carousel-indicators">
-      <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-      <li data-target="#myCarousel" data-slide-to="1"></li>
-      <li data-target="#myCarousel" data-slide-to="2"></li>
-    </ol>
+        <h2>Carousel Example</h2>
+        <div id="myCarousel" class="carousel slide" data-ride="carousel">
+            <!-- Indicators -->
+            <ol class="carousel-indicators">
+                {% for i in cafe.all_images.all %}
 
-    <!-- Wrapper for slides -->
-    <div class="carousel-inner">
-      <div class="item active">
-        <img src="{% static "mypic.jpg" %}" alt="Los Angeles" style="width:100%;">
-      </div>
+                    <li data-target="#myCarousel" data-slide-to="{{ forloop.counter }}"></li>
 
-      <div class="item">
-        <img src="{% static "mypic.jpg" %}" alt="Chicago" style="width:100%;">
-      </div>
+                {% endfor %}
+            </ol>
 
-      <div class="item">
-        <img src="{% static "mypic.jpg" %}" alt="New york" style="width:100%;">
-      </div>
+            <!-- Wrapper for slides -->
+            <div class="carousel-inner" style="height: 60rem; max-height:100%;">
+
+                <div class="item active">
+                    <img src="{{ cafe.main_image_url }}" alt="Los Angeles" style="width:100%; ">
+                </div>
+
+
+                {% for img in cafe.all_images.all %}
+                    <div class="item">
+                        <img src="{{ img.image_url }}" alt="Los Angeles" style="width:100%; height: 100%">
+                    </div>
+                {% endfor %}
+            </div>
+            <!-- Left and right controls -->
+            <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="right carousel-control" href="#myCarousel" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+
+
+        <br>
+        <br>
+        <br>
+
+        <div class="row">
+            <div class="media">
+                <div class="media-left">
+                    <img src="{{ cafe.main_image_url }}" class="media-object" style="width:200px">
+                </div>
+                <div class="media-body">
+                    <h2 class="media-heading">{{ cafe.name }}</h2>
+                    <p> {{ cafe.description }}</p>
+                </div>
+            </div>
+        </div>
+        <br>
+        <br>
+        <br>
+        <div class="row">
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab"
+                       aria-controls="home" aria-selected="true">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
+                       aria-controls="profile" aria-selected="false">Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab"
+                       aria-controls="contact" aria-selected="false">Contact</a>
+                </li>
+            </ul>
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">...</div>
+                <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">...</div>
+                <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">...</div>
+            </div>
+
+        </div>
+
+
     </div>
-
-    <!-- Left and right controls -->
-    <a class="left carousel-control" href="#myCarousel" data-slide="prev">
-      <span class="glyphicon glyphicon-chevron-left"></span>
-      <span class="sr-only">Previous</span>
-    </a>
-    <a class="right carousel-control" href="#myCarousel" data-slide="next">
-      <span class="glyphicon glyphicon-chevron-right"></span>
-      <span class="sr-only">Next</span>
-    </a>
-  </div>
-</div>
 
 
 {% endblock %}
