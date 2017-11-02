@@ -25,7 +25,7 @@ SECRET_KEY = '0rqiquas798lgbc7+#h8b==_x)c7v0-hiiv(@!-7$hv^rmul67'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-GOOGLE_RECAPTCHA_SECRET_KEY = '6LdRSRYUAAAAAOnk5yomm1dI9BmQkJWTg_wIlMJ_'
+GOOGLE_RECAPTCHA_SECRET_KEY = '6LfjxTYUAAAAAKauj-Bt4lTSUWS97CJ2OvXeYVZM'
 
 ALLOWED_HOSTS = []
 
