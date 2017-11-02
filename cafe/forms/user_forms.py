@@ -19,8 +19,8 @@ class SignUpForm(UserCreationForm):
         username = self.cleaned_data.get("username")
     # user_model = get_user_model() # your way of getting the Use
         try:
-            UserInfo.objects.get(username__iexact= "username")
-        except UserInfo.DoesNotExist:
+            User.objects.get(username__iexact=username)
+        except User.DoesNotExist:
             return username
         raise forms.ValidationError(("This username has already existed."))
 

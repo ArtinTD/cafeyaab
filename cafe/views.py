@@ -27,14 +27,10 @@ class HomePageView(ListView):
     model = Cafe
     template_name = 'index.html'
 
-
-    def search(request):
-        try:
-            q = request.GET['q']
-            cafes = HomePageView.objects.filter(name__search=q)
-            return render_to_response('index.html', {'cafes':cafes, 'q':q})
-        except KeyError:
-            return render_to_response('index.html')
+    def get_queryset(self):
+        q = self.request.GET['q']
+        cafes = Cafe.objects.filter(name__startswith=q)
+        return cafes
 
 
 def cafe_view(request, slug):
@@ -42,13 +38,17 @@ def cafe_view(request, slug):
     return render(request, 'cafe.html', {'cafe': cafe})
 
 
-class CafeView(DetailView):
-    model = Cafe
-    template_name = 'cafe.html'
+def profile_view(request, slug):
+    user = UserInfo.objects.get(id=slug)
+    return render(request, 'profile.html', {'user': user})
 
-    def get_context_data(self, **kwargs):
-        print(kwargs)
-        cafe = Cafe.objects.get(id=kwargs)
+# class CafeView(DetailView):
+#     model = Cafe
+#     template_name = 'cafe.html'
+#
+#     def get_context_data(self, **kwargs):
+#         print(kwargs)
+#         cafe = Cafe.objects.get(id=kwargs)
 
         # context = s.get_context_data(**kwargs)
         # return context
@@ -67,19 +67,20 @@ class CafeView(DetailView):
         #
         # return result
 
-# class LoginView(FormView):
-#     success_url = '/index/'
-#     form_class = AuthenticationForm
-#     template_name = 'login.html'
-#
-#     def dispatch(self, request, *args, **kwargs):
-#         request.session.set_test_cookie()
-#         return super(LoginView, self).dispatch(request, *args, **kwargs)
-#
-#     def form_valid(self, form):
-#         login(self.request, form.get_user())
-#
-#         return super(LoginView, self).form_valid(form)
+class LoginView(FormView):
+    success_url = '/index/'
+    form_class = AuthenticationForm
+    template_name = 'registration/login.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        request.session.set_test_cookie()
+        return super(LoginView, self).dispatch(request, *args, **kwargs)
+
+    def form_valid(self, form):
+        if(form.get_user().additionals.is_active):
+            login(self.request, form.get_user())
+
+        return super(LoginView, self).form_valid(form)
 #
 # class SignupView(FormView):
 #     success_url = '/index/'
@@ -109,7 +110,12 @@ def signup(request):
         form = SignUpForm(request.POST)
         print(form.data)
         if form.is_valid():
-            form.save()
+            user = form.save()
+            user_info = UserInfo()
+            user_info.user = user
+            user_info.is_active = True
+            user_info.save()
+            user.save()
             ''' Begin reCAPTCHA validation '''
             recaptcha_response = request.POST.get('g-recaptcha-response')
             url = 'https://www.google.com/recaptcha/api/siteverify'

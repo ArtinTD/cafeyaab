@@ -18,9 +18,7 @@ class CafeImage(models.Model):
 
 class UserInfo(models.Model):
     user = models.ForeignKey(User, related_name='additionals')
-    username= models.CharField(max_length=20)
-    email = models.EmailField()
-    password = models.TextField()
-
-    def __str__(self):
-        return self.user.username + ': ' + self.phone_number
+    is_active = models.BooleanField(default=False)
+    #
+    # def __str__(self):
+    #     return self.user.username

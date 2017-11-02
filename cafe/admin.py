@@ -1,6 +1,6 @@
 from django.contrib import admin
 
 # Register your models here.
-from cafe.models import Cafe
+from cafe.models import Cafe, UserInfo
 
-admin.site.register(Cafe)
+admin.site.register([Cafe, UserInfo])
