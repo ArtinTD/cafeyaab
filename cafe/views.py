@@ -42,6 +42,10 @@ def profile_view(request, slug):
     user = UserInfo.objects.get(id=slug)
     return render(request, 'profile.html', {'user': user})
 
+def profile_edit(request, slug):
+    user = UserInfo.objects.get(id=slug)
+    return render(request, 'profile.html', {'user': user})
+
 # class CafeView(DetailView):
 #     model = Cafe
 #     template_name = 'cafe.html'
@@ -68,7 +72,7 @@ def profile_view(request, slug):
         # return result
 
 class LoginView(FormView):
-    success_url = '/index/'
+    success_url = '/cafe/index/'
     form_class = AuthenticationForm
     template_name = 'registration/login.html'
 
@@ -77,7 +81,7 @@ class LoginView(FormView):
         return super(LoginView, self).dispatch(request, *args, **kwargs)
 
     def form_valid(self, form):
-        if(form.get_user().additionals.is_active):
+        if(form.get_user().additionals.first().is_active):
             login(self.request, form.get_user())
 
         return super(LoginView, self).form_valid(form)
