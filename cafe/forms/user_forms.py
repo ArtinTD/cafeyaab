@@ -16,6 +16,15 @@ class SignUpForm(UserCreationForm):
         model = User
         fields = ('username', 'name', 'email', 'password1', 'password2', )
 
+    def clean_username(self):
+        username = self.cleaned_data.get("username")
+    # user_model = get_user_model() # your way of getting the Use
+        try:
+            UserInfo.objects.get(username__iexact= "username")
+        except UserInfo.DoesNotExist:
+            return username
+        raise forms.ValidationError(_("This username has already existed."))
+
 # class SignupForm(ModelForm):
 #     """
 #     A form that creates a user, with no privileges, from the given username and

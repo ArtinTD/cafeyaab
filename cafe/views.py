@@ -55,10 +55,10 @@ def signup(request):
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=raw_password)
             login(request, user)
-            return redirect('index')
+            return redirect('/cafe/index')
     else:
         form = SignUpForm()
-    return render(request, 'index.html', {'form': form})
+    return render(request, 'signup.html', {'form': form})
 
 
 
@@ -131,4 +131,4 @@ def comments(request):
     else:
         form = SignUpForm()
 
-    return render(request, 'core/comments.html', {'comments': comments_list, 'form': form})
+    return render(request, 'index.html', {'comments': comments_list, 'form': form})
