@@ -12,9 +12,11 @@
             {% csrf_token %}
 
             <input class="inputA" name="username" placeholder="Username" type="text">
-
+{#            {{ form.username.errors }}#}
             <input class="inputA" name="password" placeholder="Password" type="password">
-
+            {% if form.errors %}
+                <p>we don,t have a user by this pass </p>
+            {% endif %}
             <input class="inputA" type="submit" value="Login">
 
 {#            <script src='https://www.google.com/recaptcha/api.js'></script>#}
