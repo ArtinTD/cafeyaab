@@ -4,6 +4,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.utils.decorators import method_decorator
 from django.views.decorators.debug import sensitive_post_parameters
 from django.views.generic.base import TemplateView, RedirectView
+from django.views.generic.detail import DetailView
 from django.views.generic.edit import FormView
 from cafe.forms.user_forms import SignUpForm
 from cafe.models import UserInfo, Cafe
@@ -35,9 +36,15 @@ class HomePageView(ListView):
         except KeyError:
             return render_to_response('index.html')
 
-class CafeView(FormView):
+class CafeView(DetailView):
+    model = Cafe
     template_name = 'cafe.html'
 
+    def get_context_data(self, **kwargs):
+        cafe = Cafe.objects.get(id = kwargs)
+
+        # context = s.get_context_data(**kwargs)
+        # return context
     # def get_queryset(self):
     #     self.request.GET['q']
     #     return Cafe.objects.filter('q')
