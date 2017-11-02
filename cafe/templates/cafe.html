@@ -6,7 +6,7 @@
 
     <div class="container">
         <h2>Carousel Example</h2>
-        <div id="myCarousel" class="carousel slide" data-ride="carousel"  style="height: 50rem; width: 50rem">
+        <div id="myCarousel" class="carousel slide" data-ride="carousel" style="height: 50rem; width: 50rem">
             <!-- Indicators -->
             <ol class="carousel-indicators">
                 {% for i in cafe.all_images.all %}
@@ -20,13 +20,13 @@
             <div class="carousel-inner" style="height: 100%;">
 
                 <div class="item active">
-                    <img src="{{ cafe.main_image_url }}"  style="width:100%; ">
+                    <img src="{{ cafe.main_image_url }}" style="width:100%; ">
                 </div>
 
 
                 {% for img in cafe.all_images.all %}
                     <div class="item">
-                        <img src="{{ img.image_url }}"  style="width:100%; height: 100%">
+                        <img src="{{ img.image_url }}" style="width:100%; height: 100%">
                     </div>
                 {% endfor %}
             </div>
