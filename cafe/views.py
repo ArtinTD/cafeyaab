@@ -36,12 +36,19 @@ class HomePageView(ListView):
         except KeyError:
             return render_to_response('index.html')
 
+
+def cafe_view(request, slug):
+    cafe = Cafe.objects.get(id=slug)
+    return render(request, 'cafe.html', {'cafe': cafe})
+
+
 class CafeView(DetailView):
     model = Cafe
     template_name = 'cafe.html'
 
     def get_context_data(self, **kwargs):
-        cafe = Cafe.objects.get(id = kwargs)
+        print(kwargs)
+        cafe = Cafe.objects.get(id=kwargs)
 
         # context = s.get_context_data(**kwargs)
         # return context
