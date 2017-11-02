@@ -1,10 +1,10 @@
 from django.conf.urls import url
-from cafe.views import HomePageView, UserInfoView, LoginView
+from cafe.views import HomePageView, LoginView
 from . import views
 
 urlpatterns = [
-    url(r'^$', LoginView.as_view(), name='login'),
+    url(r'login/^$', LoginView.as_view(), name='login'),
     url(r'index/$', HomePageView.as_view(), name='index'),
-    url(r'^signup/$', UserInfoView.as_view(), name='signup'),
-    # url(r'^$', views.index, name='index'),
+    # url(r'^$', SignupView.as_view(), name='signup'),
+    url(r'^$', views.signup, name='signup'),
 ]

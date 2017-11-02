@@ -10,7 +10,7 @@
 
         <form autocomplete="off" method="post" action="#">
             {% csrf_token %}
-            <input class="inputA" name="email" placeholder="Email" type="text">
+            <input class="inputA" name="email" placeholder="Email" type="email">
             <input class="inputA" name="username" placeholder="Username" type="text">
             <input class="inputA" name="password" placeholder="Password" type="password">
             <input class="inputA" type="submit" value="Sign up">
@@ -22,5 +22,5 @@
     <div class="signup login">
         <p>Have an account? <a href="login.html">Log in</a></p>
     </div>
-
 {% endblock %}
+
